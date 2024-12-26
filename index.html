@@ -66,49 +66,84 @@
             box-shadow: 0 8px 20px rgba(255, 60, 60, 0.6);
         }
 
-        /* Hidden Content Styling */
-        #content-link {
+        /* Popup Styling */
+        .popup-overlay {
             display: none;
-            margin-top: 20px;
-            opacity: 0;
-            animation: slideIn 1s ease forwards;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
         }
 
-        #content-link a {
-            font-size: 1.1em;
-            color: #00d4ff;
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .popup.active, .popup-overlay.active {
+            display: block;
+        }
+
+        .popup a {
+            color: #007bff;
             text-decoration: none;
             font-weight: bold;
-            transition: color 0.3s ease;
         }
 
-        #content-link a:hover {
-            color: #39f7ff;
+        .popup a:hover {
+            color: #0056b3;
         }
 
-        /* Slide-in Animation */
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .popup button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #ff3c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .popup button:hover {
+            background: #ff7c7c;
         }
     </style>
     <script>
-        function unlockContent() {
-            // Save subscription status in local storage
-            localStorage.setItem("subscribed", "true");
-            document.getElementById("content-link").style.display = "block";
+        // Show popup function
+        function showPopup() {
+            document.querySelector(".popup-overlay").classList.add("active");
+            document.querySelector(".popup").classList.add("active");
         }
 
-        // Check subscription status on page load
+        // Close popup function
+        function closePopup() {
+            document.querySelector(".popup-overlay").classList.remove("active");
+            document.querySelector(".popup").classList.remove("active");
+        }
+
+        // Unlock content and save subscription status
+        function unlockContent() {
+            localStorage.setItem("subscribed", "true");
+            alert("Thank you for subscribing! Reload the page to get the link.");
+        }
+
+        // Check if user already subscribed
         window.onload = function () {
             if (localStorage.getItem("subscribed") === "true") {
-                document.getElementById("content-link").style.display = "block";
+                showPopup();
             }
         };
     </script>
@@ -121,10 +156,14 @@
            class="btn" 
            target="_blank" 
            onclick="unlockContent()">Subscribe Now</a>
-        <div id="content-link">
-            <h3>Your Content Link:</h3>
-            <a href="https://desired-link.com" target="_blank">Click Here to Download</a>
-        </div>
+    </div>
+
+    <!-- Popup -->
+    <div class="popup-overlay"></div>
+    <div class="popup">
+        <h3>Your Content Link:</h3>
+        <a href="https://desired-link.com" target="_blank">Click Here to Download</a>
+        <button onclick="closePopup()">Close</button>
     </div>
 </body>
 </html>

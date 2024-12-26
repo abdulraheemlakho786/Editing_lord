@@ -86,10 +86,15 @@
         }
     </style>
     <script>
-        // Check subscription status on page load
+        // Clear localStorage on first load or refresh
         window.addEventListener("load", () => {
-            const subscribed = localStorage.getItem("subscribed");
+            if (!sessionStorage.getItem("visited")) {
+                localStorage.clear();
+                sessionStorage.setItem("visited", "true");
+            }
 
+            // Check subscription status
+            const subscribed = localStorage.getItem("subscribed");
             if (subscribed === "true") {
                 showDownloadButton();
             }

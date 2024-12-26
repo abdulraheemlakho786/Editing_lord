@@ -86,14 +86,14 @@
         }
     </style>
     <script>
-        // Clear localStorage on first load or refresh
+        // Clear localStorage on first load in a session
         window.addEventListener("load", () => {
-            if (!sessionStorage.getItem("visited")) {
+            if (!sessionStorage.getItem("sessionInitialized")) {
                 localStorage.clear();
-                sessionStorage.setItem("visited", "true");
+                sessionStorage.setItem("sessionInitialized", "true");
             }
 
-            // Check subscription status
+            // Check subscription status and update button
             const subscribed = localStorage.getItem("subscribed");
             if (subscribed === "true") {
                 showDownloadButton();
@@ -113,7 +113,7 @@
             `;
         }
 
-        // Detect user returning after subscribing
+        // Detect if the user returns after subscribing
         document.addEventListener("visibilitychange", () => {
             if (
                 document.visibilityState === "visible" &&
@@ -122,9 +122,17 @@
                 showDownloadButton();
             }
         });
+
+        // Handle link opening for the first time
+        function handleFirstTimeOpen() {
+            if (!localStorage.getItem("firstTimeOpened")) {
+                localStorage.setItem("firstTimeOpened", "true");
+                alert("Subscribe to unlock the content!");
+            }
+        }
     </script>
 </head>
-<body>
+<body onload="handleFirstTimeOpen()">
     <div class="container">
         <!-- Channel Info Section -->
         <div class="channel-info">

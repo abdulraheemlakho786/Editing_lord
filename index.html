@@ -80,105 +80,41 @@
         }
 
         .btn:hover {
-            background: linear-gradient(135deg, #ff3c3c, #ff7c3c);
+            background: linear-gradient(135deg, #ff3c3c, #ff7c7c);
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(255, 60, 60, 0.6);
         }
-
-        /* Popup Styling */
-        .popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            color: black;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            z-index: 1000;
-            display: none;
-        }
-
-        .popup.active, .popup-overlay.active {
-            display: block;
-        }
-
-        .popup a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .popup a:hover {
-            color: #0056b3;
-        }
-
-        .popup button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #ff3c3c;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .popup button:hover {
-            background: #ff7c7c;
-        }
     </style>
     <script>
-        // Show popup function
-        function showPopup() {
-            document.querySelector(".popup-overlay").classList.add("active");
-            document.querySelector(".popup").classList.add("active");
-        }
-
-        // Close popup function
-        function closePopup() {
-            document.querySelector(".popup-overlay").classList.remove("active");
-            document.querySelector(".popup").classList.remove("active");
-        }
-
-        // Unlock content and save subscription status
-        function unlockContent() {
-            localStorage.setItem("subscribed", "true");
-            localStorage.setItem("popupShown", "false"); // Reset popup shown flag
-        }
-
-        // Detect return to page after subscribing
+        // Check subscription status on page load
         window.addEventListener("load", () => {
             const subscribed = localStorage.getItem("subscribed");
-            const popupShown = localStorage.getItem("popupShown");
 
-            if (subscribed === "true" && popupShown !== "true") {
-                setTimeout(showPopup, 500); // Show popup after a short delay
-                localStorage.setItem("popupShown", "true"); // Set flag to avoid showing on refresh
+            if (subscribed === "true") {
+                showDownloadButton();
             }
         });
 
-        // Listen for visibility change to detect user returning
+        // Handle subscription
+        function handleSubscription() {
+            localStorage.setItem("subscribed", "true");
+        }
+
+        // Show download button
+        function showDownloadButton() {
+            const buttonContainer = document.getElementById("button-container");
+            buttonContainer.innerHTML = `
+                <a href="https://desired-link.com" class="btn" target="_blank">Download</a>
+            `;
+        }
+
+        // Detect user returning after subscribing
         document.addEventListener("visibilitychange", () => {
             if (
                 document.visibilityState === "visible" &&
-                localStorage.getItem("subscribed") === "true" &&
-                localStorage.getItem("popupShown") !== "true"
+                localStorage.getItem("subscribed") === "true"
             ) {
-                showPopup();
-                localStorage.setItem("popupShown", "true");
+                showDownloadButton();
             }
         });
     </script>
@@ -193,18 +129,14 @@
 
         <h1>Unlock Exclusive Content</h1>
         <p>Subscribe to our YouTube channel to access the premium content link!</p>
-        <a href="https://www.youtube.com/@Editing_Lord?sub_confirmation=1" 
-           class="btn" 
-           target="_blank" 
-           onclick="unlockContent()">Subscribe Now</a>
-    </div>
 
-    <!-- Popup -->
-    <div class="popup-overlay"></div>
-    <div class="popup">
-        <h3>Your Content Link:</h3>
-        <a href="https://desired-link.com" target="_blank">Click Here to Download</a>
-        <button onclick="closePopup()">Close</button>
+        <!-- Button Section -->
+        <div id="button-container">
+            <a href="https://www.youtube.com/@Editing_Lord?sub_confirmation=1" 
+               class="btn" 
+               target="_blank" 
+               onclick="handleSubscription()">Subscribe Now</a>
+        </div>
     </div>
 </body>
 </html>

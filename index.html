@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe to Unlock</title>
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #3a3a58);
+            color: #f3f3f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Main Container */
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 400px;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            color: #dcdcdc;
+        }
+
+        /* Button Styling */
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1em;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+            background: linear-gradient(135deg, #ff7c7c, #ff3c3c);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 60, 60, 0.4);
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #ff3c3c, #ff7c7c);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 60, 60, 0.6);
+        }
+
+        /* Hidden Content Styling */
+        #content-link {
+            display: none;
+            margin-top: 20px;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        #content-link a {
+            font-size: 1.1em;
+            color: #00d4ff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        #content-link a:hover {
+            color: #39f7ff;
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <script>
+        function unlockContent() {
+            alert("Thank you for subscribing! The link is now unlocked.");
+            document.getElementById("content-link").style.display = "block";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Unlock Exclusive Content</h1>
+        <p>Subscribe to our YouTube channel to access the premium content link!</p>
+        <a href="https://www.youtube.com/@Editing_Lord?sub_confirmation=1" 
+           class="btn" 
+           target="_blank" 
+           onclick="unlockContent()">Subscribe Now</a>
+        <div id="content-link">
+            <h3>Your Content Link:</h3>
+            <a href="https://desired-link.com" target="_blank">Click Here to Download</a>
+        </div>
+    </div>
+</body>
+</html>

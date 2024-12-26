@@ -33,6 +33,25 @@
             max-width: 400px;
         }
 
+        .channel-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .channel-info img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .channel-info h2 {
+            font-size: 1.5em;
+            color: #ffffff;
+        }
+
         h1 {
             font-size: 2.2em;
             margin-bottom: 20px;
@@ -61,7 +80,7 @@
         }
 
         .btn:hover {
-            background: linear-gradient(135deg, #ff3c3c, #ff7c7c);
+            background: linear-gradient(135deg, #ff3c3c, #ff7c3c);
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(255, 60, 60, 0.6);
         }
@@ -137,19 +156,41 @@
         // Unlock content and save subscription status
         function unlockContent() {
             localStorage.setItem("subscribed", "true");
-            alert("Thank you for subscribing! Reload the page to get the link.");
+            localStorage.setItem("popupShown", "false"); // Reset popup shown flag
         }
 
-        // Check if user already subscribed
-        window.onload = function () {
-            if (localStorage.getItem("subscribed") === "true") {
-                showPopup();
+        // Detect return to page after subscribing
+        window.addEventListener("load", () => {
+            const subscribed = localStorage.getItem("subscribed");
+            const popupShown = localStorage.getItem("popupShown");
+
+            if (subscribed === "true" && popupShown !== "true") {
+                setTimeout(showPopup, 500); // Show popup after a short delay
+                localStorage.setItem("popupShown", "true"); // Set flag to avoid showing on refresh
             }
-        };
+        });
+
+        // Listen for visibility change to detect user returning
+        document.addEventListener("visibilitychange", () => {
+            if (
+                document.visibilityState === "visible" &&
+                localStorage.getItem("subscribed") === "true" &&
+                localStorage.getItem("popupShown") !== "true"
+            ) {
+                showPopup();
+                localStorage.setItem("popupShown", "true");
+            }
+        });
     </script>
 </head>
 <body>
     <div class="container">
+        <!-- Channel Info Section -->
+        <div class="channel-info">
+            <img src="EDITING-1.png" alt="Channel Icon">
+            <h2>Editing Lord</h2>
+        </div>
+
         <h1>Unlock Exclusive Content</h1>
         <p>Subscribe to our YouTube channel to access the premium content link!</p>
         <a href="https://www.youtube.com/@Editing_Lord?sub_confirmation=1" 

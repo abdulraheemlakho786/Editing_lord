@@ -4,134 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subscribe to Unlock</title>
-    <style>
-        /* Global Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1e1e2f, #3a3a58);
-            color: #f3f3f3;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-        }
-
-        /* Main Container */
-        .container {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 20px 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            max-width: 400px;
-        }
-
-        .channel-info {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .channel-info img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .channel-info h2 {
-            font-size: 1.5em;
-            color: #ffffff;
-        }
-
-        h1 {
-            font-size: 2.2em;
-            margin-bottom: 20px;
-        }
-
-        p {
-            font-size: 1.1em;
-            margin-bottom: 30px;
-            color: #dcdcdc;
-        }
-
-        /* Button Styling */
-        .btn {
-            display: inline-block;
-            padding: 15px 30px;
-            font-size: 1em;
-            font-weight: bold;
-            color: #ffffff;
-            text-decoration: none;
-            background: linear-gradient(135deg, #ff7c7c, #ff3c3c);
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 60, 60, 0.4);
-        }
-
-        .btn:hover {
-            background: linear-gradient(135deg, #ff3c3c, #ff7c7c);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 60, 60, 0.6);
-        }
-    </style>
-    <script>
-        // Clear localStorage on first load in a session
-        window.addEventListener("load", () => {
-            if (!sessionStorage.getItem("sessionInitialized")) {
-                localStorage.clear();
-                sessionStorage.setItem("sessionInitialized", "true");
-            }
-
-            // Check subscription status and update button
-            const subscribed = localStorage.getItem("subscribed");
-            if (subscribed === "true") {
-                showDownloadButton();
-            }
-        });
-
-        // Handle subscription
-        function handleSubscription() {
-            localStorage.setItem("subscribed", "true");
-        }
-
-        // Show download button
-        function showDownloadButton() {
-            const buttonContainer = document.getElementById("button-container");
-            buttonContainer.innerHTML = `
-                <a href="https://drive.google.com/file/d/1-28iI-9fNGwTrfIgu030G3kSiKOD-Jt2/view?usp=drivesdk" class="btn" target="_blank">Download</a>
-            `;
-        }
-
-        // Detect if the user returns after subscribing
-        document.addEventListener("visibilitychange", () => {
-            if (
-                document.visibilityState === "visible" &&
-                localStorage.getItem("subscribed") === "true"
-            ) {
-                showDownloadButton();
-            }
-        });
-
-        // Handle link opening for the first time
-        function handleFirstTimeOpen() {
-            if (!localStorage.getItem("firstTimeOpened")) {
-                localStorage.setItem("firstTimeOpened", "true");
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body onload="handleFirstTimeOpen()">
+    <div id="particles-js"></div>
     <div class="container">
         <!-- Channel Info Section -->
         <div class="channel-info">
@@ -150,5 +26,8 @@
                onclick="handleSubscription()">Subscribe Now</a>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="particles-config.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
